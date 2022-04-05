@@ -2,24 +2,70 @@
 % Please edit documentation in R/residualPlot.R
 \name{residualPlot}
 \alias{residualPlot}
-\title{Draw a martingale residual plot with an object of class coxph}
+\title{Draw a residual plot with an object of class coxph}
 \usage{
-residualPlot(fit, mode = 1)
+residualPlot(
+  fit,
+  type = "martingale",
+  vars = NULL,
+  ncol = 2,
+  show.point = TRUE,
+  se = TRUE,
+  topn = 5,
+  labelsize = 4
+)
 }
 \arguments{
-\item{fit}{An object of class coxph}
+\item{fit}{An object of class coxph or survreg}
 
-\item{mode}{Integer If mode is 1, draw martingale residual plot.
-If mode is 2, draw dfbeta plot. if mode is 3, draw risk score plot}
+\item{type}{character One of the c("martingale","deviance","score","schoenfeld",
+"dfbeta","dfbetas","scaledsch","partial"). Default value is "martingale".}
+
+\item{vars}{character Names of variables to plot. default value is NULL}
+
+\item{ncol}{numeric number of columns}
+
+\item{show.point}{logical Whether or not show point}
+
+\item{se}{logical Whether or not show se}
+
+\item{topn}{numeric number of data to be labelled}
+
+\item{labelsize}{numeric size of label}
 }
 \value{
-A ggplot
+A patchwork object
 }
 \description{
-Draw a martingale residual plot with an object of class coxph
+Draw a residual plot with an object of class coxph
 }
 \examples{
 require(survival)
+data(cancer)
 fit=coxph(Surv(time,status==2)~log(bili)+age+cluster(edema),data=pbc)
 residualPlot(fit)
+residualPlot(fit,vars="age")
+fit=coxph(Surv(time,status==2)~age,data=pbc)
+residualPlot(fit)
+residualPlot(fit,"partial")
+fit=coxph(Surv(time,status)~rx+sex+logWBC,data=anderson)
+residualPlot(fit,ncol=3)
+\dontrun{
+data(pharmacoSmoking,package="asaur")
+fit=coxph(Surv(ttr,relapse)~grp+employment+age,data=pharmacoSmoking)
+residualPlot(fit)
+residualPlot(fit,var="age")
+residualPlot(fit,type="dfbeta")
+residualPlot(fit,type="dfbeta",var="age")
+residualPlot(fit,type="dfbeta",var="employment")
+residualPlot(fit,type="dfbeta",var="employmentother")
+pharmacoSmoking$ttr[pharmacoSmoking$ttr==0]=0.5
+fit=survreg(Surv(ttr,relapse)~grp+age+employment,data=pharmacoSmoking,dist="weibull")
+residualPlot(fit,type="response")
+residualPlot(fit,type="deviance")
+residualPlot(fit,type="dfbeta",vars="age")
+fit=survreg(Surv(time,status)~ph.ecog+sex*age,data=lung,dist="weibull")
+residualPlot(fit,"dfbeta")
+residualPlot(fit,"deviance")
+}
 }

@@ -4,16 +4,18 @@
 \alias{printdf}
 \title{Print function for data.frame}
 \usage{
-printdf(x, showid = FALSE)
+printdf(x)
 }
 \arguments{
 \item{x}{A data.frame}
-
-\item{showid}{logical if TRUE, show id}
 }
 \value{
 No return value, called for side effects
 }
 \description{
 Print function for data.frame
+}
+\examples{
+x=mtcars[1:5,1:5]
+printdf(x)
 }

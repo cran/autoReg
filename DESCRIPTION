@@ -1,7 +1,7 @@
 Package: autoReg
 Type: Package
 Title: Automatic Linear and Logistic Regression and Survival Analysis
-Version: 0.1.0
+Version: 0.2.6
 Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",
     role=c("aut", "cre"))
 URL: https://github.com/cardiomoon/autoReg,
@@ -13,16 +13,19 @@ Description: Make summary tables for descriptive statistics and select explanato
     result of regression analysis and plots. The tables and plots can be exported in "HTML", 
     "pdf('LaTex')", "docx('MS Word')" and "pptx('MS Powerpoint')" documents.
 License: GPL-3
+LazyData: true
 Encoding: UTF-8
-Imports: moonBook(>= 0.3.0), nortest, dplyr, stringr, tidyselect,
-        tidyr, purrr, survival, mice, officer, flextable, rlang,
-        patchwork, ggplot2, boot, broom, cmprsk
-Suggests: knitr, finalfit, lme4, TH.data, rmarkdown, survminer, asaur
+Imports: moonBook(>= 0.3.0), nortest, dplyr, crayon, stringr, tidyr,
+        purrr, survival, mice, officer, flextable, rlang, patchwork,
+        ggplot2, boot, broom, tidycmprsk, scales, maxstat, pammtools
+Suggests: knitr, finalfit, lme4, TH.data, rmarkdown, survminer, asaur,
+        cmprsk, PairedData
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
+Depends: R (>= 2.10)
 NeedsCompilation: no
-Packaged: 2022-01-08 08:33:46 UTC; cardiomoon
+Packaged: 2022-04-05 06:04:35 UTC; cardiomoon
 Author: Keon-Woong Moon [aut, cre]
 Maintainer: Keon-Woong Moon <cardiomoon@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-01-10 18:12:47 UTC
+Date/Publication: 2022-04-05 06:20:02 UTC

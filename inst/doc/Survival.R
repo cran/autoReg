@@ -63,7 +63,7 @@ result=cox.zph(fit)
 result
 
 ## ----fig.width=8,fig.height=6-------------------------------------------------
-survminer::ggcoxzph(result)
+coxzphplot(result)
 
 ## -----------------------------------------------------------------------------
 fit=coxph(Surv(time,status==1)~age+sex+thickness+ulcer,data=melanoma)
@@ -81,7 +81,11 @@ fit=cuminc(melanoma$time/365,melanoma$status1)
 fit
 
 ## ----fig.width=8, fig.height=5------------------------------------------------
-ggcmprsk(fit,c("melanoma","others"))
+ggcmprsk(time/365+status1~1,data=melanoma,id=c("alive","melanoma","others"),se=TRUE)
+
+## ----fig.width=8, fig.height=5------------------------------------------------
+ggcmprsk(time/365+status1~sex,data=melanoma,id=c("alive","melanoma","others"),
+         strata=c("female","male"))
 
 ## -----------------------------------------------------------------------------
 data(retinopathy, package="survival")

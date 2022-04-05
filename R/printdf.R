@@ -8,7 +8,10 @@
 #' @return No return value, called for side effects
 #' @export
 print.autoReg=function(x,...){
-     printdf(x)
+     if(is.null(attr(x,"summary"))) x=myformat(x)
+     printdf(x,...)
+     if(!is.null(attr(x,"lik"))) cat(paste0(attr(x,"lik")," "))
+     if(!is.null(attr(x,"dev"))) cat(paste0(attr(x,"dev")," "))
      if(!is.null(attr(x,"add"))) cat(paste0(attr(x,"add"),collapse=","),"\n")
 }
 
@@ -16,34 +19,24 @@ print.autoReg=function(x,...){
 
 #'Print function for data.frame
 #'@param x A data.frame
-#'@param showid logical if TRUE, show id
+#'@importFrom crayon col_nchar
+#'@export
+#'@examples
+#' x=mtcars[1:5,1:5]
+#' printdf(x)
 #'@return No return value, called for side effects
-printdf=function(x,showid=FALSE){
+printdf=function(x){
+        # showid=FALSE
 
-     if(("autoReg" %in% class(x))&(showid==FALSE)) x$id=NULL
-     if("autoReg" %in% class(x)) {
-          names(x)[1]=paste0("Dependent: ",attr(x,"yvars"))
-          names(x)[2]=" "
-          if(attr(x,"model")=="coxph") names(x)[3]="all"
-     }
-     lengths1=map_int(x,maxnchar)
-     lengths2=map_int(names(x),maxnchar)
-     lengths=pmax(lengths1,lengths2)+2
-     lineno=sum(lengths)
-     no=ncol(x)
-     side=rep("both",no)
-     list(names(x),lengths,side) %>% pmap_chr(str_pad) -> header
+     x=as_printable(x)
+     lineno=sum(col_nchar(names(x)))
      drawline(lineno);cat("\n")
-     cat(paste0(header,collapse=""),"\n")
+     cat(paste0(colnames(x),collapse=""),"\n")
      drawline(lineno);cat("\n")
-     if("imputedReg" %in% class(x)) {
-          side=c(rep("right",1),rep("left",no-1))
-     } else {
-          side=c(rep("right",2),rep("left",no-2))
-     }
-     list(x,lengths,side) %>% pmap_dfc(str_pad) ->x1
      for(i in 1:nrow(x)){
-          cat(paste0(x1[i,],collapse=""),"\n")
+          cat(paste0(x[i,],collapse=""),"\n")
      }
      drawline(lineno);cat("\n")
 }
+
+
