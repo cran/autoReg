@@ -77,14 +77,15 @@ autoReg(fit,uni=TRUE,threshold=1) %>%
 
 ## -----------------------------------------------------------------------------
 library(cmprsk) # for use of cuminc()
-fit=cuminc(melanoma$time/365,melanoma$status1)
+melanoma$years=melanoma$time/365
+fit=cuminc(melanoma$years,melanoma$status1)
 fit
 
 ## ----fig.width=8, fig.height=5------------------------------------------------
-ggcmprsk(time/365+status1~1,data=melanoma,id=c("alive","melanoma","others"),se=TRUE)
+ggcmprsk(years+status1~1,data=melanoma,id=c("alive","melanoma","others"),se=TRUE)
 
 ## ----fig.width=8, fig.height=5------------------------------------------------
-ggcmprsk(time/365+status1~sex,data=melanoma,id=c("alive","melanoma","others"),
+ggcmprsk(years+status1~sex,data=melanoma,id=c("alive","melanoma","others"),
          strata=c("female","male"))
 
 ## -----------------------------------------------------------------------------

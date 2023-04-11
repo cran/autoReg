@@ -9,6 +9,7 @@ showEffect(
   x = NULL,
   color = NULL,
   facet = NULL,
+  autovar = TRUE,
   pred.values = list(),
   se = TRUE,
   logy = TRUE,
@@ -24,6 +25,8 @@ showEffect(
 \item{color}{character name of color variable}
 
 \item{facet}{character name of facet variable}
+
+\item{autovar}{logical Whether or not select color and facet variable automatically}
 
 \item{pred.values}{list list of values of predictor variables}
 
@@ -53,8 +56,10 @@ fit=survreg(Surv(time,status)~ph.ecog+sex,data=lung,dist="weibull")
 showEffect(fit)
 fit=survreg(Surv(time,status)~ph.ecog+age,data=lung,dist="weibull")
 showEffect(fit)
-fit=survreg(Surv(time,status)~sex*age,data=lung,dist="weibull")
-showEffect(fit)
+fit=survreg(Surv(time,status)~ph.ecog+sex*age,data=lung,dist="weibull")
+showEffect(fit,x="age",color="sex",facet="ph.ecog")
+showEffect(fit,pred.values=list(age=c(50,60,70),ph.ecog=c(0,3),sex=c(1,2)),
+  x="ph.ecog",color="sex",facet="age",autovar=FALSE)
 fit=survreg(Surv(time,status)~age,data=lung,dist="weibull")
 showEffect(fit)
 }

@@ -3,6 +3,7 @@
 #' @param x character name of x-axis variable
 #' @param color character name of color variable
 #' @param facet character name of facet variable
+#' @param autovar logical Whether or not select color and facet variable automatically
 #' @param pred.values list list of values of predictor variables
 #' @param se logical whether or not show se
 #' @param logy logical WHether or not draw y-axis on log scale
@@ -23,12 +24,17 @@
 #' showEffect(fit)
 #' fit=survreg(Surv(time,status)~ph.ecog+age,data=lung,dist="weibull")
 #' showEffect(fit)
-#' fit=survreg(Surv(time,status)~sex*age,data=lung,dist="weibull")
-#' showEffect(fit)
+#' fit=survreg(Surv(time,status)~ph.ecog+sex*age,data=lung,dist="weibull")
+#' showEffect(fit,x="age",color="sex",facet="ph.ecog")
+#' showEffect(fit,pred.values=list(age=c(50,60,70),ph.ecog=c(0,3),sex=c(1,2)),
+#'   x="ph.ecog",color="sex",facet="age",autovar=FALSE)
 #' fit=survreg(Surv(time,status)~age,data=lung,dist="weibull")
 #' showEffect(fit)
-showEffect=function(fit,x=NULL,color=NULL,facet=NULL,pred.values=list(),se=TRUE,logy=TRUE,collabel=label_both,rowlabel=label_both){
-           # x=NULL;color=NULL;facet=NULL;pred.values=list()  ;se=TRUE;logy=TRUE;collabel=label_both;rowlabel=label_both
+showEffect=function(fit,x=NULL,color=NULL,facet=NULL,autovar=TRUE,pred.values=list(),se=TRUE,logy=TRUE,collabel=label_both,rowlabel=label_both){
+              # x=NULL;color=NULL;facet=NULL;pred.values=list()  ;se=TRUE;logy=TRUE;collabel=label_both;rowlabel=label_both;autovar=TRUE
+        # pred.values=list(Age=c(50,60,70),Gender=c(1,2));
+        # x="PD_L1_test_combine_high";color="NLRgroup";facet=c("Gender","Age")
+        # autovar=FALSE;se=TRUE;logy=TRUE;collabel=label_both;rowlabel=label_both;
      data=fit2model(fit)
      xvars = attr(fit$terms, "term.labels")
      xvars=xvars[!str_detect(xvars,":")]
@@ -52,8 +58,10 @@ showEffect=function(fit,x=NULL,color=NULL,facet=NULL,pred.values=list(),se=TRUE,
           }
      }
      if(is.null(x)) { x<-x2}
+     if(autovar){
      if(is.null(color)) { color<-color2}
      if(is.null(facet)) { facet<-facet2}
+     }
      x;color;facet;
      if(is.null(x)){
           if(!is.null(color)) {
@@ -88,6 +96,15 @@ showEffect=function(fit,x=NULL,color=NULL,facet=NULL,pred.values=list(),se=TRUE,
                res[[add[i]]]=names(sort(table(data[[add[i]]]),decreasing=TRUE))[1]
                if(is.numeric(data[[add[i]]])) res[[add[i]]]=as.numeric(res[[add[i]]])
      }
+     }
+     res
+     pred.values
+     if(length(pred.values)>0){
+          no=length(names(pred.values))
+          for(i in 1:no){
+               tempname=names(pred.values)[i]
+               res[[tempname]]=pred.values[[tempname]]
+          }
      }
      newdata=expand.grid(res)
      newdata
