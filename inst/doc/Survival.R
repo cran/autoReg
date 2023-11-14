@@ -1,11 +1,11 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = NA,
   message=FALSE
 )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  #install.packages("devtools")
 #  devtools::install_github("cardiomoon/autoReg")
 
@@ -34,7 +34,7 @@ fit
 ## -----------------------------------------------------------------------------
 summary(fit,times=0:5)
 
-## ---- fig.height=4,fig.width=6------------------------------------------------
+## ----fig.height=4,fig.width=6-------------------------------------------------
 library(survminer)
 ggsurvplot(fit)
 
