@@ -4,8 +4,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  #install.packages("devtools")
-#  devtools::install_github("cardiomoon/autoReg")
+# #install.packages("devtools")
+# devtools::install_github("cardiomoon/autoReg")
 
 ## -----------------------------------------------------------------------------
 library(autoReg)
@@ -20,12 +20,12 @@ ft=gaze(sex~.,data=acs) %>% myft()
 ft
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  library(rrtable)
-#  
-#  table2pptx(ft)
+# library(rrtable)
+# 
+# table2pptx(ft)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  table2docx(ft)
+# table2docx(ft)
 
 ## -----------------------------------------------------------------------------
 gaze(sex+Dx~.,data=acs) %>% myft()
@@ -89,7 +89,7 @@ x=modelPlot(fit)
 x
 
 ## ----fig.show='hide',eval=FALSE-----------------------------------------------
-#  plot2pptx(print(x))
+# plot2pptx(print(x))
 
 ## ----fig.width=8,fig.height=7-------------------------------------------------
 modelPlot(fit,uni=TRUE,threshold=1,show.ref=FALSE)

@@ -6,8 +6,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  #install.packages("devtools")
-#  devtools::install_github("cardiomoon/autoReg")
+# #install.packages("devtools")
+# devtools::install_github("cardiomoon/autoReg")
 
 ## -----------------------------------------------------------------------------
 library(autoReg)
